@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="index.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById("context").textContent = JSON.stringify(glue42electron.context);
+      const focusedSpan = document.getElementById("focused");
+      window.onfocus = function () {
+        focusedSpan.textContent = true;
+      }
+      window.onblur = function () {
+        focusedSpan.textContent = false;
+      }
+    }, false);
+  </script>
+</head>
+
+<body>
+  <h1>💖 Hello World from Glue42 Child Window!</h1>
+  <p>Welcome to your Glue42 Electron application.</p>
+  <div>
+    <span>Focused:</span>
+    <p id="focused"></p>
+  </div>
+  <div>
+    <span>My context:</span>
+    <p id="context"></p>
+  </div>
+</body>
+
+</html>
