@@ -55,7 +55,7 @@ app.on('ready', async () => {
     bounds: {
       x: 100,
       y: 100,
-      width: 350,
+      width: 550,
       height: 350
     }
   });
@@ -94,21 +94,25 @@ const subscribeForIPCMessages = () => {
     const bw = createWindow("child.html");
     if (type === "relative") {
       glue.registerChildWindow(bw, {
-        name: "child-app-electron-2",
+        name: "child-app-electron-relative",
         title: "Glue42 Electron Child Application",
       }, {
+        allowChannels: true,
+        channelId: "Red",
         relativeTo: gdMainWindow.id,
-        relativeDirection: "bottom",
+        relativeDirection: "right",
 
       });
     } else if (type === "tab") {
       glue.registerChildWindow(bw, {
-        name: "child-app-electron-2",
+        name: "child-app-electron-tab",
         title: "Glue42 Electron Child Application",
       }, {
         mode: "tab",
+        allowChannels: true,
+        channelId: "Red",
         tabGroupId: "myTabGroup",
-        tabSelected: false
+        tabSelected: true
       });
     }
   });
