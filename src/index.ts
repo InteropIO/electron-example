@@ -38,18 +38,27 @@ app.on('ready', async () => {
     preload: true,
     appDefinition: {
       title: "Glue42 Electron Main Application",
-      name: "My Electron Main App",
+      name: "my-electron-main-app",
       details: {
         mode: "tab",
         tabGroupId: "myTabGroup",
         allowChannels: true,
-        channelId: "Red"
+        channelId: "Red",
+        left: 100
       }
     }
   });
   registerGlue42ChildApps();
   const mainWindow = createWindow();
-  gdMainWindow = await glue.registerStartupWindow(mainWindow);
+  gdMainWindow = await glue.registerStartupWindow(mainWindow, {
+    tabGroupId: "myTabGroup",
+    bounds: {
+      x: 100,
+      y: 100,
+      width: 350,
+      height: 350
+    }
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -73,13 +82,11 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 const registerGlue42ChildApps = () => {
-  glue.registerAppFactory(
-    {
-      name: "child-app-electron",
-      title: "Glue42 Electron Child Application"
-    }, (appDefinition, context, glue42electron) => {
-      return createWindow("child.html");
-    })
+  glue.registerAppFactory({ name: "child-app-electron", title: "Glue42 Electron Child Application" }, function(appDefinition, context, glue42electron) {
+    // here windowOptions can be overridden
+    this.title = "my special title";
+    return createWindow("child.html");
+  })
 };
 
 const subscribeForIPCMessages = () => {
@@ -89,29 +96,20 @@ const subscribeForIPCMessages = () => {
       glue.registerChildWindow(bw, {
         name: "child-app-electron-2",
         title: "Glue42 Electron Child Application",
-        details: { relativeTo: gdMainWindow.id }
-      })
+      }, {
+        relativeTo: gdMainWindow.id,
+        relativeDirection: "bottom",
+
+      });
     } else if (type === "tab") {
       glue.registerChildWindow(bw, {
         name: "child-app-electron-2",
         title: "Glue42 Electron Child Application",
-        details: {
-          mode: "tab",
-          tabGroupId: "myTabGroup",
-        }
-      })
-    } else {
-      glue.registerChildWindow(bw, {
-        name: "child-app-electron-2",
-        title: "Glue42 Electron Child Application",
-        details: {
-          mode: "tab",
-          left: 100,
-          top: 100,
-          width: 400,
-          height: 400
-        }
-      })
+      }, {
+        mode: "tab",
+        tabGroupId: "myTabGroup",
+        tabSelected: false
+      });
     }
   });
 }
