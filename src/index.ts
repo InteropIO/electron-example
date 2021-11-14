@@ -43,8 +43,12 @@ app.on('ready', async () => {
         mode: "tab",
         tabGroupId: "myTabGroup",
         allowChannels: true,
+        allowCollapse: false,
         channelId: "Red",
-        left: 100
+        left: 100,
+        top: 200,
+        width: 400,
+        height:400
       }
     }
   });
