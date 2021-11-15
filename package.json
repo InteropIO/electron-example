@@ -58,6 +58,8 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@glue42/electron": "^0.1.3",
+    "@types/lodash": "^4.14.176",
     "electron-squirrel-startup": "^1.0.0"
   }
 }

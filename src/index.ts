@@ -48,7 +48,7 @@ app.on('ready', async () => {
         left: 100,
         top: 200,
         width: 400,
-        height:400
+        height: 400
       }
     }
   });
@@ -117,6 +117,11 @@ const subscribeForIPCMessages = () => {
         channelId: "Red",
         tabGroupId: "myTabGroup",
         tabSelected: true
+      });
+    } else {
+      glue.registerChildWindow(bw, {
+        name: "child-app-electron-tab",
+        title: "Glue42 Electron Child Application",
       });
     }
   });
