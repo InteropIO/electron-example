@@ -17,7 +17,8 @@ const createWindow = (file = "index.html"): BrowserWindow => {
     width: 800,
     frame: false,
     webPreferences: {
-      preload: join(__dirname, '../dist/preload.js')
+      preload: join(__dirname, '../dist/preload.js'),
+      contextIsolation: false
     }
   });
   // and load the index.html of the app.
@@ -34,7 +35,7 @@ const createWindow = (file = "index.html"): BrowserWindow => {
 app.on('ready', async () => {
   subscribeForIPCMessages();
   glue = await initialize({
-    inject: "fdc3",
+    inject: "glue",
     preload: true,
     appDefinition: {
       title: "Glue42 Electron Main Application",
